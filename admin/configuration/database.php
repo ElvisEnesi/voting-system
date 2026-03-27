@@ -1,4 +1,6 @@
 <?php
+    // include constant file
+    include "configuration/constant.php";
     // declare database variables
     $database_username = 'root';
     $server = 'localhost';
@@ -10,7 +12,7 @@
     if (mysqli_error($connection)) {
         die("connection failed: " . mysqli_error($connection));
     } else {
-        echo "connection successful";
+        // echo "connection successful";
     }
     
 

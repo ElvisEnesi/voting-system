@@ -10,7 +10,7 @@
     <h1>Log out!!</h1>
     <div class="confirm">
         <a href="">Yes</a>
-        <a href="dashboard.html">No</a>
+        <a href="<?= root_url ?>admin/dashboard.php">No</a>
     </div>
 </body>
 </html>

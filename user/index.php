@@ -6,7 +6,7 @@
         <div class="hero_content">
             <h1>CUSTECH voting system</h1>
             <p>Vote from the comfort of your homes...</p>
-            <button onclick="window.location.href=''">Vote Now</button>
+            <button onclick="window.location.href='<?= root_url ?>accessible/candidate.php'">Vote Now</button>
         </div>
     </section>
     <p class="desc">
@@ -16,7 +16,7 @@
     <h1 id="candidates">Candidates</h1> 
     <section class="team">
         <div class="team_card">
-            <img src="./images/couples.jpg" onclick="window.location.href='single_candidate.html'">
+            <img src="./images/couples.jpg" onclick="window.location.href='<?= root_url ?>accessible/single_candidate.php'">
             <div class="team_desc">
                 <h3>APC party</h3>
                 <span class="team_name">Candidate 1</span>
@@ -24,7 +24,7 @@
         </div>
     </section>
     <!--to top-->
-    <div class="to_top_button"><a href="index.html#top"><ion-icon name="arrow-up-outline"></ion-icon></a></div>
+    <div class="to_top_button"><a href="<?= root_url ?>user/index.php#top"><ion-icon name="arrow-up-outline"></ion-icon></a></div>
     <?php
         include "../partials/footer.php";
     ?>

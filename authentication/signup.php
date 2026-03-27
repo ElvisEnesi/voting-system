@@ -20,7 +20,7 @@
                 <button type="submit" name="submit">Submit</button>
             </form>
             <div class="note">
-                Don't have an account? <a href="signin.html">Log in</a>
+                Don't have an account? <a href="<?= root_url ?>authentication/signin.php">Log in</a>
             </div>
         </div>
     </section>

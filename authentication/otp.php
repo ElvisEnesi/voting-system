@@ -16,7 +16,7 @@
             </form>
         </div>
         <div class="note">
-            Cancel process?<a href="dashboard.html#settings">Cancel</a>
+            Cancel process?<a href="<?= root_url ?>admin/dashboard.php#settings">Cancel</a>
         </div>
     </section>
     <script src="script.js"></script>

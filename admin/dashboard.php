@@ -23,31 +23,31 @@
                     <div class="icon">
                         <ion-icon name="file-tray-full-outline"></ion-icon>
                     </div>
-                    <a href="dashboard.php#overview">Overview</a>
+                    <a href="<?= root_url ?>admin/dashboard.php#overview">Overview</a>
                 </div>
                 <div class="link_folder links_side">
                     <div class="icon">
                         <ion-icon name="duplicate-outline"></ion-icon>
                     </div>
-                    <a href="dashboard.php#Candidate">Candidate categories</a>
+                    <a href="<?= root_url ?>admin/dashboard.php#Candidate">Candidate categories</a>
                 </div>
                 <div class="link_folder links_side">
                     <div class="icon">
                         <ion-icon name="people-outline"></ion-icon>
                     </div>
-                    <a href="dashboard.php#Candidates">Candidates</a>
+                    <a href="<?= root_url ?>admin/dashboard.php#Candidates">Candidates</a>
                 </div>
                 <div class="link_folder links_side">
                     <div class="icon">
                         <ion-icon name="bookmarks-outline"></ion-icon>
                     </div>
-                    <a href="dashboard.php#votes">Votes</a>
+                    <a href="<?= root_url ?>admin/dashboard.php#votes">Votes</a>
                 </div>
                 <div class="link_folder links_side">
                     <div class="icon">
                         <ion-icon name="hardware-chip-outline"></ion-icon>
                     </div>
-                    <a href="dashboard.php#security">Security reviews</a>
+                    <a href="<?= root_url ?>admin/dashboard.php#security">Security reviews</a>
                 </div>
             </div>
             <div class="minor_links">
@@ -55,19 +55,19 @@
                     <div class="icon">
                         <ion-icon name="home-outline"></ion-icon>
                     </div>
-                    <a href="index.php">Home</a>
+                    <a href="<?= root_url ?>accessible/index.php">Home</a>
                 </div>
                 <div class="link_folder links_side">
                     <div class="icon">
                         <ion-icon name="settings-outline"></ion-icon>
                     </div>
-                    <a href="dashboard.php#settings">Settings</a>
+                    <a href="<?= root_url ?>admin/dashboard.php#settings">Settings</a>
                 </div>
                 <div class="link_folder links_side">
                     <div class="icon">
                         <ion-icon name="log-out-outline"></ion-icon>
                     </div>
-                    <a href="logout.php">Log out</a>
+                    <a href="<?= root_url ?>authentication/logout.php">Log out</a>
                 </div>
             </div>
         </aside>
@@ -124,7 +124,7 @@
             </div>
             <div class="table_form" id="Candidate">
                 <h3>Candidate Categories</h3>
-                <div class="add_more">Do you want to add more?? <div class="icon" onclick="window.location.href='add_candidate_category.php'">+</div></div>
+                <div class="add_more">Do you want to add more?? <div class="icon" onclick="window.location.href='<?= root_url ?>admin/add_candidate_category.php'">+</div></div>
                 <table>
                     <tr>
                         <th>Title</th>
@@ -142,7 +142,7 @@
             </div>
             <div class="table_form" id="Candidates">
                 <h3>Candidate</h3>
-                <div class="add_more">Do you want to add more?? <div class="icon" onclick="window.location.href='add_candidate.php'">+</div></div>
+                <div class="add_more">Do you want to add more?? <div class="icon" onclick="window.location.href='<?= root_url ?>admin/add_candidate.php'">+</div></div>
                 <table>
                     <tr>
                         <th>Title</th>

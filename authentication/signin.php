@@ -20,10 +20,10 @@
                 <button type="submit" name="submit">Submit</button>
             </form>
             <div class="note">
-                Don't have an account? <a href="signup.html">Register</a>
+                Don't have an account? <a href="<?= root_url ?>authentication/signup.php">Register</a>
             </div>
             <div class="note">
-                Forgotten your password? <a href="forgotten_password.html">Recover</a>
+                Forgotten your password? <a href="<?= root_url ?>authentication/forgotten_password.php">Recover</a>
             </div>
         </div>
     </section>
