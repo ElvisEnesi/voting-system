@@ -9,7 +9,7 @@
 <body>
     <!--header-->
     <section class="header">
-        <div class="logo" onclick="window.location.href='index.html'">Vote</div>
+        <div class="logo" onclick="window.location.href='index.php'">Vote</div>
         <!--for media query-->
         <div class="icon">
             <div class="openNav"><ion-icon name="menu-outline"></ion-icon></div>
@@ -23,7 +23,7 @@
                 </button>   
                 <div class="dropdown_links">
                     <a href="">Overview of the hotel</a>
-                    <a href="index.html#candidates">Candidates</a>
+                    <a href="index.php#candidates">Candidates</a>
                 </div>
             </div>
             <div class="dropdown">
@@ -32,14 +32,14 @@
                     <div class="drop_icon_open"><ion-icon name="chevron-down-outline"></ion-icon></div>
                 </button>
                 <div class="dropdown_links">
-                    <a href="candidate.html">Candidates</a>
+                    <a href="candidate.php">Candidates</a>
                 </div>
             </div>
             <div class="dropdown">
-                <button onclick="window.location.href='signin.html'">Sign in</button>
+                <button onclick="window.location.href='<?= root_url ?>authentication/signup.php'">Sign in</button>
             </div>
             <div class="dropdown">
-                <a href="dashboard.html"><img src="../images/"></a>
+                <a href="dashboard.php"><img src="../images/"></a>
             </div>
         </div>
     </section>

@@ -55,7 +55,7 @@
                     <div class="icon">
                         <ion-icon name="home-outline"></ion-icon>
                     </div>
-                    <a href="<?= root_url ?>accessible/index.php">Home</a>
+                    <a href="<?= root_url ?>admin/index.php">Home</a>
                 </div>
                 <div class="link_folder links_side">
                     <div class="icon">
