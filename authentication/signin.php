@@ -1,17 +1,32 @@
+<?php
+    include('../configuration/database.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <title>Voting system</title>
+    <link rel="stylesheet" href="<?php root_url ?>../css/style.css">
 </head>
 <body>
+    <?php
+        if (isset($_SESSION['add_user_success'])) {
+            echo "<div class='notice'>" . $_SESSION['add_user_success'] . "</div>";
+        }
+        unset($_SESSION['add_user_success']);
+    ?>
+    <?php
+        if (isset($_SESSION['sign_user'])) {
+            echo "<div class='notice'>" . $_SESSION['sign_user'] . "</div>";
+        }
+        unset($_SESSION['sign_user']);
+    ?>
     <section class="log show">
         <h2>Sign in</h2>
         <div class="form">
-            <form action="" method="post">
-                <input type="number" name="nin" placeholder="Your NIN!!">
+            <form action="<?= root_url ?>authentication/signin_logic.php" method="post">
+                <input type="email" name="email" placeholder="Your email!!">
                 <input type="password" name="password" id="password" placeholder="Your password!!">
                 <div class="check">
                     <label for="check">Show password</label>
@@ -27,6 +42,6 @@
             </div>
         </div>
     </section>
-    <script src="script.js"></script>
+    <script src="<?= root_url ?>javascript/script.js"></script>
 </body>
 </html>

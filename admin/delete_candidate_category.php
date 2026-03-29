@@ -1,5 +1,5 @@
     <?php
-        include "partial/header.php";
+        include "./partial/header.php";
     ?>
     <h1>Delete room!!</h1>
     <div class="confirm">

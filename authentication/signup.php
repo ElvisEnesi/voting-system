@@ -1,16 +1,21 @@
 <?php
-    include "../configuration/database.php";
-    echo $server;
+    include('../configuration/database.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <title>Voting system</title>
+    <link rel="stylesheet" href="<?php root_url ?>../css/style.css">
 </head>
 <body>
+    <?php
+        if (isset($_SESSION['add_user'])) {
+            echo "<div class='notice'>" . $_SESSION['add_user'] . "</div>";
+        }
+        unset($_SESSION['add_user']);
+    ?>
     <section class="log show">
         <h2>Sign up</h2>
         <div class="form">
@@ -18,8 +23,8 @@
                 <input type="text" name="full_name" placeholder="Your full name!!">
                 <input type="number" name="nin" placeholder="Your user nin!!">
                 <input type="email" name="email" placeholder="Your email!!">
-                <input type="password" name="Create" placeholder="Create password!!">
-                <input type="password" name="Confirm" placeholder="Confirm password!!">
+                <input type="password" name="create" placeholder="Create password!!">
+                <input type="password" name="confirm" placeholder="Confirm password!!">
                 <input type="file" name="avatar">
                 <button type="submit" name="submit">Submit</button>
             </form>
@@ -28,6 +33,6 @@
             </div>
         </div>
     </section>
-    <script src="script.js"></script>
+    <script src="<?= root_url ?>javascript/script.js"></script>
 </body>
 </html>

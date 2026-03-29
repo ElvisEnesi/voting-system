@@ -1,5 +1,5 @@
     <?php
-        include "partial/header.php";
+        include "./partial/header.php";
     ?>
     <!--hero-->
     <section class="hero" id="top">

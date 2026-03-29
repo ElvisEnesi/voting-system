@@ -1,6 +1,10 @@
 <?php
-    // include constant file
-    include "configuration/constant.php";
+    // start session
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+    // define constant
+    define("root_url", "http://localhost/voting-system/");
     // declare database variables
     $database_username = 'root';
     $server = 'localhost';

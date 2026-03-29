@@ -1,15 +1,18 @@
+<?php
+    include('../configuration/database.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hotel system</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <title>Voting system</title>
+    <link rel="stylesheet" href="<?php root_url ?>../css/style.css">
 </head>
 <body>
     <!--header-->
     <section class="header">
-        <div class="logo" onclick="window.location.href='index.php'">Vote</div>
+        <div class="logo" onclick="window.location.href='<?php root_url ?>admin/index.php'">Vote</div>
         <!--for media query-->
         <div class="icon">
             <div class="openNav"><ion-icon name="menu-outline"></ion-icon></div>
@@ -32,14 +35,14 @@
                     <div class="drop_icon_open"><ion-icon name="chevron-down-outline"></ion-icon></div>
                 </button>
                 <div class="dropdown_links">
-                    <a href="candidate.php">Candidates</a>
+                    <a href="http://localhost/voting-system/accessible/candidate.php">Candidates</a>
                 </div>
             </div>
             <div class="dropdown">
                 <button onclick="window.location.href='<?= root_url ?>authentication/signup.php'">Sign in</button>
             </div>
             <div class="dropdown">
-                <a href="dashboard.php"><img src="../images/"></a>
+                <a href="<?php root_url ?>user/dashboard.php"><img src="../images/"></a>
             </div>
         </div>
     </section>

@@ -6,6 +6,12 @@
 html {
   scroll-behavior: smooth;
 }
+.notice {
+    text-align: center;
+    font-size: 20px;
+    padding: 10px 0;
+    width: 100%;
+}
 button {
     background-color: #C8A96A;
     color: white;

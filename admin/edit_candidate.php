@@ -1,5 +1,5 @@
     <?php
-        include "partial/header.php";
+        include "./partial/header.php";
     ?>
     <div class="add_form">
         <h3>Edit Candidate</h3>
