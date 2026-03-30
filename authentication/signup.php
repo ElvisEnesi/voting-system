@@ -14,7 +14,7 @@
         if (isset($_SESSION['add_user'])) {
             echo "<div class='notice'>" . $_SESSION['add_user'] . "</div>";
         }
-        unset($_SESSION['add_user']);
+        unset($_SESSION['add_user']);//
     ?>
     <section class="log show">
         <h2>Sign up</h2>

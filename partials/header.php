@@ -1,5 +1,12 @@
 <?php
     include('../configuration/database.php');
+    // define logged in user
+    $current_user = $_SESSION['user_id'] ?? null;
+    // select users details
+    $select_user = mysqli_prepare($connection, "SELECT * FROM user WHERE id=?");
+    mysqli_stmt_bind_param($select_user, "i", $current_user);
+    mysqli_stmt_execute($select_user);
+    $user_result = mysqli_fetch_assoc(mysqli_stmt_get_result($select_user));
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,7 +19,7 @@
 <body>
     <!--header-->
     <section class="header">
-        <div class="logo" onclick="window.location.href='<?php root_url ?>admin/index.php'">Vote</div>
+        <div class="logo" onclick="window.location.href='<?php root_url ?>admin/index.php'">Custech Voting System</div>
         <!--for media query-->
         <div class="icon">
             <div class="openNav"><ion-icon name="menu-outline"></ion-icon></div>
@@ -38,11 +45,20 @@
                     <a href="http://localhost/voting-system/accessible/candidate.php">Candidates</a>
                 </div>
             </div>
-            <div class="dropdown">
-                <button onclick="window.location.href='<?= root_url ?>authentication/signup.php'">Sign in</button>
-            </div>
-            <div class="dropdown">
-                <a href="<?php root_url ?>user/dashboard.php"><img src="../images/"></a>
-            </div>
+            <?php if (!isset($_SESSION['user_id'])) : ?>
+                <div class="dropdown">
+                    <button onclick="window.location.href='<?= root_url ?>authentication/signin.php'">Sign in</button>
+                </div>
+            <?php else : ?>
+                <?php if (isset($_SESSION['user_is_admin'])) : ?>
+                    <div class="dropdown">
+                        <a href="http://localhost/voting-system/admin/dashboard.php"><img src="../images/users/<?= htmlspecialchars($user_result['avatar'], ENT_QUOTES,'UTF-8') ?>"></a>
+                    </div>
+                <?php else : ?>
+                    <div class="dropdown">
+                        <a href="http://localhost/voting-system/user/dashboard.php"><img src="../images/users/<?= htmlspecialchars($user_result['avatar'], ENT_QUOTES,'UTF-8') ?>"></a>
+                    </div>
+                <?php endif; ?>
+            <?php endif; ?>
         </div>
     </section>

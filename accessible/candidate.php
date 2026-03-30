@@ -1,18 +1,29 @@
     <?php
         include "../partials/header.php";
+        // select all candidates
+        $select_candidates = mysqli_query($connection, "SELECT * FROM candidate");
     ?>
-    <h1 id="candidates">Candidates</h1> 
-    <section class="team">
-        <div class="team_card">
-            <img src="./images/couples.jpg" onclick="window.location.href='single_candidate.html'">
-            <div class="team_desc">
-                <h3>APC party</h3>
-                <span class="team_name">Candidates 1</span>
-            </div>
-        </div>
-    </section>
+    <h1 id="candidates">Candidates</h1>
+    <?php if (mysqli_num_rows($select_candidates) > 0) : ?>
+        <section class="team">
+            <?php while ($gotten_candidates = mysqli_fetch_assoc($select_candidates)) : ?>
+                <div class="team_card">
+                    <img 
+                        src="../images/candidates/<?= htmlspecialchars($gotten_candidates['picture'], ENT_QUOTES, 'UTF-8') ?>" 
+                        onclick="window.location.href='<?= root_url ?>accessible/single_candidate.php?id=<?= htmlspecialchars($gotten_candidates['id'], ENT_QUOTES, 'UTF-8') ?>'"
+                    >
+                    <div class="team_desc">
+                        <h3><?= htmlspecialchars($gotten_candidates['party'], ENT_QUOTES, 'UTF-8') ?></h3>
+                        <span class="team_name"><?= htmlspecialchars($gotten_candidates['title'], ENT_QUOTES, 'UTF-8') ?></span>
+                    </div>
+                </div>
+            <?php endwhile; ?>
+        </section>
+    <?php else : ?>
+        <div class="notice">No candidate to display</div>
+    <?php endif; ?>
     <!--to top-->
-    <div class="to_top_button"><a href="candidate.html#top"><ion-icon name="arrow-up-outline"></ion-icon></a></div>
+    <div class="to_top_button"><a href="<?= root_url ?>accessible/index.php#top"><ion-icon name="arrow-up-outline"></ion-icon></a></div>
     <?php
         include "../partials/footer.php";
     ?>

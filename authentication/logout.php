@@ -12,8 +12,12 @@
 <body>
     <h1>Log out!!</h1>
     <div class="confirm">
-        <a href="">Yes</a>
-        <a href="<?= root_url ?>admin/dashboard.php">No</a>
+        <a href="<?= root_url ?>authentication/logout_logic.php">Yes</a>
+        <?php if (isset($_SESSION['user_is_admin'])) : ?>
+            <a href="<?= root_url ?>admin/dashboard.php">No</a>
+        <?php else : ?>
+            <a href="<?= root_url ?>user/dashboard.php">No</a>
+        <?php endif; ?>
     </div>
 </body>
 </html>

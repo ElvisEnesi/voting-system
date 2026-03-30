@@ -1,6 +1,22 @@
-    <?php
-        include "../partials/header.php";
-    ?>
+<?php
+    include "../configuration/database.php";
+    // define logged in user
+    $current_user = $_SESSION['user_id'] ?? null;
+    // select users details
+    $select_user = mysqli_prepare($connection, "SELECT * FROM user WHERE id=?");
+    mysqli_stmt_bind_param($select_user, "i", $current_user);
+    mysqli_stmt_execute($select_user);
+    $user_result = mysqli_fetch_assoc(mysqli_stmt_get_result($select_user));
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voting system</title>
+    <link rel="stylesheet" href="<?= root_url ?>./css/style.css">
+</head>
+<body>
     <section class="dashboard_container">
         <aside id="aside">
             <div class="first_element">
@@ -10,66 +26,64 @@
                 <div class="title">Dashboard</div>
             </div>
             <div class="major_links">
-                <div class="link_folder">
+                <div class="link_folder links_side">
                     <div class="icon">
                         <ion-icon name="file-tray-full-outline"></ion-icon>
                     </div>
-                    <a href="dashboard.html#overview">Overview</a>
+                    <a href="<?= root_url ?>user/dashboard.php#overview">Overview</a>
                 </div>
-                <div class="link_folder">
-                    <div class="icon">
-                        <ion-icon name="duplicate-outline"></ion-icon>
+                <?php if (isset($_SESSION['user_is_admin'])) :  ?>
+                    <div class="link_folder links_side">
+                        <div class="icon">
+                            <ion-icon name="duplicate-outline"></ion-icon>
+                        </div>
+                        <a href="<?= root_url ?>user/dashboard.php#Candidate">Candidate categories</a>
                     </div>
-                    <a href="dashboard.html#Candidate">Candidate categories</a>
-                </div>
-                <div class="link_folder">
-                    <div class="icon">
-                        <ion-icon name="bed-outline"></ion-icon>
+                    <div class="link_folder links_side">
+                        <div class="icon">
+                            <ion-icon name="people-outline"></ion-icon>
+                        </div>
+                        <a href="<?= root_url ?>user/dashboard.php#Candidates">Candidates</a>
                     </div>
-                    <a href="dashboard.html#Candidates">Candidates</a>
-                </div>
-                <div class="link_folder">
-                    <div class="icon">
-                        <ion-icon name="newspaper-outline"></ion-icon>
+                    <div class="link_folder links_side">
+                        <div class="icon">
+                            <ion-icon name="bookmarks-outline"></ion-icon>
+                        </div>
+                        <a href="<?= root_url ?>user/dashboard.php#votes">Votes</a>
                     </div>
-                    <a href="dashboard.html#votes">Votes</a>
-                </div>
-                <div class="link_folder">
-                    <div class="icon">
-                        <ion-icon name="hardware-chip-outline"></ion-icon>
+                    <div class="link_folder links_side">
+                        <div class="icon">
+                            <ion-icon name="hardware-chip-outline"></ion-icon>
+                        </div>
+                        <a href="<?= root_url ?>user/dashboard.php#security">Security reviews</a>
                     </div>
-                    <a href="dashboard.html#security">Security reviews</a>
-                </div>
+                <?php endif; ?>
             </div>
             <div class="minor_links">
-                <div class="link_folder">
+                <div class="link_folder links_side">
                     <div class="icon">
                         <ion-icon name="home-outline"></ion-icon>
                     </div>
-                    <a href="index.html">Home</a>
+                    <a href="<?= root_url ?>user/index.php">Home</a>
                 </div>
-                <div class="link_folder">
+                <div class="link_folder links_side">
                     <div class="icon">
                         <ion-icon name="settings-outline"></ion-icon>
                     </div>
-                    <a href="dashboard.html#settings">Settings</a>
+                    <a href="<?= root_url ?>user/dashboard.php#settings">Settings</a>
                 </div>
-                <div class="link_folder">
+                <div class="link_folder links_side">
                     <div class="icon">
                         <ion-icon name="log-out-outline"></ion-icon>
                     </div>
-                    <a href="logout.html">Log out</a>
+                    <a href="<?= root_url ?>authentication/logout.php">Log out</a>
                 </div>
             </div>
         </aside>
         <main id="main">
             <div id="overview">
                 <div class="head">
-                    <div class="icon">
-                        <div class="openSide">o<ion-icon name="menu-outline"></ion-icon></div>
-                        <div class="closeSide">c<ion-icon name="close-outline"></ion-icon></div>
-                    </div>
-                    <div class="name">Elvis</div>
+                    <div class="name"><?= htmlspecialchars($user_result['name'], ENT_QUOTES, 'UTF-8') ?></div>
                     <div class="search_form">
                         <form action="" method="get">
                             <input type="search" name="dashboard_search" placeholder="Search" required>
@@ -77,29 +91,39 @@
                         </form>
                     </div>
                     <div class="picture">
-                        <img src="./images/G_2skTNXIAIRxbf.jpg">
+                        <img src="../images/users/<?= htmlspecialchars($user_result['avatar'], ENT_QUOTES, 'UTF-8') ?>">
                     </div>
                 </div>
                 <div class="info">
+                    <?php if (isset($_SESSION['user_is_admin'])) :  ?>
+                        <div class="info_container">
+                            <div class="sticker"><ion-icon name="hardware-chip-outline"></ion-icon></div>
+                            <div class="info_details">
+                                <div class="total">35</div>
+                                <div class="desc">New security threats</div>
+                            </div>
+                        </div>
+                    <?php else : ?>
+                        <div class="info_container">
+                            <div class="sticker"><ion-icon name="hardware-chip-outline"></ion-icon></div>
+                            <div class="info_details">
+                                <div class="total">0</div>
+                                <div class="desc">View details</div>
+                            </div>
+                        </div>
+                    <?php endif; ?>
                     <div class="info_container">
-                        <div class="sticker"><ion-icon name="card-outline"></ion-icon></div>
+                        <div class="sticker"><ion-icon name="bookmarks-outline"></ion-icon></div>
                         <div class="info_details">
                             <div class="total">550</div>
                             <div class="desc">Total votes</div>
                         </div>
                     </div>
                     <div class="info_container">
-                        <div class="sticker"><ion-icon name="bed-outline"></ion-icon></div>
+                        <div class="sticker"><ion-icon name="people-outline"></ion-icon></div>
                         <div class="info_details">
                             <div class="total">45</div>
                             <div class="desc">Candidates</div>
-                        </div>
-                    </div>
-                    <div class="info_container">
-                        <div class="sticker"><ion-icon name="hardware-chip-outline"></ion-icon></div>
-                        <div class="info_details">
-                            <div class="total">35</div>
-                            <div class="desc">New security threats</div>
                         </div>
                     </div>
                 </div>
@@ -117,78 +141,80 @@
                     </tr>
                 </table>
             </div>
-            <div class="table_form" id="Candidate">
-                <h3>Candidate Categories</h3>
-                <div class="add_more">Do you want to add more?? <div class="icon" onclick="window.location.href='add_candidate_category.html'">+</div></div>
-                <table>
-                    <tr>
-                        <th>Title</th>
-                        <th>Date created</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
-                    </tr>
-                    <tr>
-                        <td>data</td>
-                        <td>data</td>
-                        <td><a href="edit_candidate_category.html">edit</a></td>
-                        <td><a href="delete_candidate_category.html" class="danger">delete</a></td>
-                    </tr>
-                </table>
-            </div>
-            <div class="table_form" id="Candidates">
-                <h3>Candidate</h3>
-                <div class="add_more">Do you want to add more?? <div class="icon" onclick="window.location.href='add_candidate.html'">+</div></div>
-                <table>
-                    <tr>
-                        <th>Title</th>
-                        <th>Price</th>
-                        <th>Category</th>
-                        <th>head</th>
-                        <th>head</th>
-                    </tr>
-                    <tr>
-                        <td>data</td>
-                        <td>data</td>
-                        <td>data</td>
-                        <td><a href="edit_candidate.html">edit</a></td>
-                        <td><a href="delete_candidate.html" class="danger">delete</a></td>
-                    </tr>
-                </table>
-            </div>
-            <div class="table_form" id="votes">
-                <h3>Votes</h3>
-                <table>
-                    <tr>
-                        <th>head</th>
-                        <th>head</th>
-                        <th>head</th>
-                        <th>head</th>
-                        <th>head</th>
-                    </tr>
-                    <tr>
-                        <td>data</td>
-                        <td>data</td>
-                        <td>data</td>
-                        <td><a href="">edit</a></td>
-                        <td><a href="" class="danger">delete</a></td>
-                    </tr>
-                </table>
-            </div>
-            <div class="table_form" id="security">
-                <h3>Security reviews</h3>
-                <table>
-                    <tr>
-                        <th>Title</th>
-                        <th>IP address</th>
-                        <th>Date created</th>
-                    </tr>
-                    <tr>
-                        <td>data</td>
-                        <td>data</td>
-                        <td>data</td>
-                    </tr>
-                </table>
-            </div>
+            <?php if (isset($_SESSION['user_is_admin'])) : ?>
+                <div class="table_form" id="Candidate">
+                    <h3>Candidate Categories</h3>
+                    <div class="add_more">Do you want to add more?? <div class="icon" onclick="window.location.href='<?= root_url ?>admin/add_candidate_category.php'">+</div></div>
+                    <table>
+                        <tr>
+                            <th>Title</th>
+                            <th>Date created</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                        <tr>
+                            <td>data</td>
+                            <td>data</td>
+                            <td><a href="edit_candidate_category.php">edit</a></td>
+                            <td><a href="delete_candidate_category.php" class="danger">delete</a></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="table_form" id="Candidates">
+                    <h3>Candidate</h3>
+                    <div class="add_more">Do you want to add more?? <div class="icon" onclick="window.location.href='<?= root_url ?>admin/add_candidate.php'">+</div></div>
+                    <table>
+                        <tr>
+                            <th>Title</th>
+                            <th>Price</th>
+                            <th>Category</th>
+                            <th>head</th>
+                            <th>head</th>
+                        </tr>
+                        <tr>
+                            <td>data</td>
+                            <td>data</td>
+                            <td>data</td>
+                            <td><a href="edit_candidate.php">edit</a></td>
+                            <td><a href="delete_candidate.php" class="danger">delete</a></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="table_form" id="votes">
+                    <h3>Votes</h3>
+                    <table>
+                        <tr>
+                            <th>head</th>
+                            <th>head</th>
+                            <th>head</th>
+                            <th>head</th>
+                            <th>head</th>
+                        </tr>
+                        <tr>
+                            <td>data</td>
+                            <td>data</td>
+                            <td>data</td>
+                            <td><a href="">edit</a></td>
+                            <td><a href="" class="danger">delete</a></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="table_form" id="security">
+                    <h3>Security reviews</h3>
+                    <table>
+                        <tr>
+                            <th>Title</th>
+                            <th>IP address</th>
+                            <th>Date created</th>
+                        </tr>
+                        <tr>
+                            <td>data</td>
+                            <td>data</td>
+                            <td>data</td>
+                        </tr>
+                    </table>
+                </div>
+            <?php endif; ?>
             <div class="settings" id="settings">
                 <h2>Settings</h2>
                 <div class="form">
@@ -210,6 +236,12 @@
             </div>
         </main>
     </section>
-    <?php
-        include "../partials/footer.php";
-    ?>
+    <div class="icons">
+        <div class="opensidebar"><ion-icon name="chevron-forward-outline"></ion-icon></div>
+        <div class="closesidebar"><ion-icon name="chevron-back-outline"></ion-icon></div>
+    </div>
+    <script src="../javascript/script.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

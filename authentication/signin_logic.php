@@ -1,17 +1,20 @@
 <?php
     // include files
     require_once '../configuration/database.php';
+    require_once '../encryption/encryption.php';
     if (isset($_POST['submit'])) {
         // declare variables
+        $search_email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
         $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
         $key = filter_var($_POST['password'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         // validate inputs
         if (!$key || !$email) {
             $_SESSION['sign_user'] = "Fill all inputs!!";
         } else {
-            // check for nin
-            $stmt = mysqli_prepare($connection, "SELECT * FROM user WHERE email=?");
-            mysqli_stmt_bind_param($stmt, "i", $email);
+            // check for email
+            $hashed_email = hash('sha256', $search_email . "MY_SECRET_SALT");
+            $stmt = mysqli_prepare($connection, "SELECT * FROM user WHERE hashed_email=?");
+            mysqli_stmt_bind_param($stmt, "s", $hashed_email);
             mysqli_stmt_execute($stmt);
             $result = mysqli_stmt_get_result($stmt);
             if (mysqli_num_rows($result) == 1) {
@@ -22,7 +25,7 @@
                 // verify password
                 if (password_verify($key, $password)) {
                     // login in user
-                    $_SESSION['user_id'] = bin2hex($users['uuid']);
+                    $_SESSION['user_id'] = $users['id'];
                     // set admin role
                     if ($users['is_admin'] == 1) {
                         $_SESSION['user_is_admin'] = true;
