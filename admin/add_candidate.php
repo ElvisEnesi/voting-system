@@ -2,6 +2,7 @@
     // include files
     include('./configuration/database.php');
     include "./authorization/authorized_user.php";
+    include "./authorization/logged_user.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">

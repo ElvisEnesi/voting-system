@@ -21,7 +21,11 @@
                     <p><?= htmlspecialchars($candidate_result['party'], ENT_QUOTES, 'UTF-8') ?></p>
                 </div>
                 <form action="<?= root_url ?>authentication/vote.php?id=<?= htmlspecialchars($candidate_result['id'], ENT_QUOTES, 'UTF-8') ?>" method="post">
+                    <?php if (isset($_SESSION['user_id'])) : ?>
                     <button type="submit" name="vote">Vote</button>
+                    <?php else : ?>
+                        <div class="notice">Login to vote</div>
+                    <?php endif; ?>
                 </form>
             </div>
         </div>

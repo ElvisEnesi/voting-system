@@ -1,4 +1,6 @@
 <?php
+    include "../configuration/database.php";
+    include "./authorization/logged_user.php";
     include('../smtp/mail.php');
     // get party details
     if (isset($_GET['id'])) {

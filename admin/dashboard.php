@@ -2,6 +2,7 @@
     // include files
     include "./configuration/database.php";
     include "./authorization/authorized_user.php";
+    include "./authorization/logged_user.php";
     require_once '../encryption/encryption.php';
     // define logged in user
     $current_user = $_SESSION['user_id'] ?? null;
@@ -120,8 +121,6 @@
                 </div>
                 <h3>My votes</h3>
                 <?php
-                    // decrypt user nin
-                    // $user_nin = decrypt_data($user_result['nin']);
                     // select users vote
                     $personal_vote = mysqli_prepare($connection, "SELECT * FROM votes WHERE user_id = ?");
                     mysqli_stmt_bind_param($personal_vote, "i", $current_user);
@@ -132,14 +131,12 @@
                     <?php $personal_vote_result_details = mysqli_fetch_assoc($personal_vote_result); ?>
                         <table>
                             <tr>
-                                <th>Name</th>
                                 <th>Party</th>
-                                <th>Time created</th>
+                                <th>Time of vote</th>
                             </tr>
                             <tr>
-                                <td>Elvis Enesi Jatto</td>
-                                <td>APC</td>
-                                <td>3/24/2026</td>
+                                <td><?= htmlspecialchars($personal_vote_result_details['party'], ENT_QUOTES, 'UTF-8') ?></td>
+                                <td><?= date("M, d-Y, H:i", strtotime(htmlspecialchars($personal_vote_result_details['date'], ENT_QUOTES, 'UTF-8'))) ?></td>
                             </tr>
                         </table>
                 <?php else : ?>
@@ -195,6 +192,11 @@
                         <div class="notice">No Items to display</div>
                     <?php endif; ?>
                 </div>
+                <?php
+                    // join user & votes table to fetch data
+                    $joined_table = mysqli_query($connection, "SELECT u.id AS id, u.name AS name, v.user_id AS user_id, v.party AS party, 
+                    u.nin AS hashed, v.date AS date FROM user u INNER JOIN votes v ON u.id = v.user_id");
+                ?>
                 <div class="table_form" id="votes">
                     <h3>Votes</h3>
                     <table>
@@ -202,30 +204,49 @@
                             <th>User</th>
                             <th>NIN</th>
                             <th>Party</th>
-                            <th>Created at</th>
+                            <th>Created</th>
                         </tr>
-                        <tr>
-                            <td>data</td>
-                            <td>data</td>
-                            <td>data</td>
-                            <td>data</td>
-                        </tr>
+                        <?php if (mysqli_num_rows($joined_table) > 0) : ?>
+                            <?php while ($joined_table_result = mysqli_fetch_assoc($joined_table)) : ?>
+                                <tr>
+                                    <td><?= htmlspecialchars($joined_table_result['name'], ENT_QUOTES, 'UTF-8') ?></td>
+                                    <td><?= htmlspecialchars(decrypt_data($joined_table_result['hashed']), ENT_QUOTES, 'UTF-8') ?></td>
+                                    <td><?= htmlspecialchars($joined_table_result['party'], ENT_QUOTES, 'UTF-8') ?></td>
+                                    <td>
+                                        On <?= date("d M, Y", strtotime(htmlspecialchars($joined_table_result['date'], ENT_QUOTES, 'UTF-8'))) ?> 
+                                        at <?= date("H:i", strtotime(htmlspecialchars($joined_table_result['date'], ENT_QUOTES, 'UTF-8'))) ?>
+                                    </td>
+                                </tr>
+                            <?php endwhile; ?>
+                        <?php else : ?>
+                            <div class="notice">No vote found!!</div>
+                        <?php endif; ?>
                     </table>
                 </div>
                 <div class="table_form" id="security">
+                    <?php 
+                        // select all candidates
+                        $select_threats = mysqli_query($connection, "SELECT * FROM threats ORDER BY date desc LIMIT 20");
+                    ?>
                     <h3>Security reviews</h3>
-                    <table>
-                        <tr>
-                            <th>Title</th>
-                            <th>IP address</th>
-                            <th>Date created</th>
-                        </tr>
-                        <tr>
-                            <td>data</td>
-                            <td>data</td>
-                            <td>data</td>
-                        </tr>
-                    </table>
+                    <?php if (mysqli_num_rows($select_threats) > 0) : ?>
+                        <table>
+                            <tr>
+                                <th>Name</th>
+                                <th>IP address</th>
+                                <th>Created at</th>
+                            </tr>
+                            <?php while ($gotten_threats = mysqli_fetch_assoc($select_threats)) : ?>
+                                <tr>
+                                    <td><?= htmlspecialchars($gotten_threats['type'], ENT_QUOTES, 'UTF-8') ?></td>
+                                    <td><?= htmlspecialchars($gotten_threats['ip_address'], ENT_QUOTES, 'UTF-8') ?></td>
+                                    <td><?= date("M, d/Y, H:i", strtotime(htmlspecialchars($gotten_threats['date'], ENT_QUOTES, 'UTF-8'))) ?></td>
+                                </tr>
+                            <?php endwhile; ?>
+                        </table>
+                    <?php else : ?>
+                        <div class="notice">No threat to display</div>
+                    <?php endif; ?>
                 </div>
             <?php endif; ?>
         </main>

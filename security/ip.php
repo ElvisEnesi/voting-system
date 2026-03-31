@@ -1,7 +1,4 @@
 <?php
-    // include files
-    require_once './configuration/database.php';
-    include "./authorization/authorized_user.php";
     // Ip address function
     function get_ip_address () {
         // declare ip address

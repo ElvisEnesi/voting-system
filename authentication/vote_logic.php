@@ -10,6 +10,8 @@
 
     require_once '../configuration/database.php';
     require_once '../encryption/encryption.php';
+    include "./authorization/logged_user.php";
+    require_once '../security/ip.php';
     // get party details from url
     if (isset($_GET['id'])) {
         $id = filter_var($_GET['id'], FILTER_SANITIZE_NUMBER_INT);
@@ -18,6 +20,14 @@
         exit();
     }
     if (isset($_POST['submit'])) {
+        // login attempt
+        $vote_flow = mysqli_prepare($connection, "INSERT INTO vote_log (status, ip_address) VALUES(?, ?)");
+        // login status
+        $vote_status = "attempt";
+        // bind param & execute
+        mysqli_stmt_bind_param($vote_flow, "ss", $vote_status, $user_ip);
+        mysqli_stmt_execute($vote_flow);
+        //
         $get_party = mysqli_prepare($connection, "SELECT * FROM candidate WHERE id=?");
         mysqli_stmt_bind_param($get_party, "i", $id);
         mysqli_stmt_execute($get_party);
@@ -62,6 +72,13 @@
         }
         // redirect if there's any error
         if (isset($_SESSION['add_user'])) {
+            // login attempt
+            $vote_flow = mysqli_prepare($connection, "INSERT INTO vote_log (status, ip_address) VALUES(?, ?)");
+            // login status
+            $vote_status = "failure";
+            // bind param & execute
+            mysqli_stmt_bind_param($vote_flow, "ss", $vote_status, $user_ip);
+            mysqli_stmt_execute($vote_flow);
             header("location: " . root_url . "authentication/otp.php?id=" . htmlspecialchars($id, ENT_QUOTES, 'UTF-8'));
             exit();
         } else {
@@ -95,6 +112,13 @@
                 } catch (Exception $e) {
                     echo "Error: {$mail->ErrorInfo}";
                 }
+                // login attempt
+                $vote_flow = mysqli_prepare($connection, "INSERT INTO vote_log (status, ip_address) VALUES(?, ?)");
+                // login status
+                $vote_status = "success";
+                // bind param & execute
+                mysqli_stmt_bind_param($vote_flow, "ss", $vote_status, $user_ip);
+                mysqli_stmt_execute($vote_flow);
                 if (isset($_SESSION['user_is_admin'])) {
                     header("location: " . root_url . "admin/dashboard.php");
                     exit();

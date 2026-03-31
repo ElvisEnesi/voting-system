@@ -2,6 +2,7 @@
     // include files
     include('./configuration/database.php');
     include "./authorization/authorized_user.php";
+    include "./authorization/logged_user.php";
     // define logged in user
     $current_user = $_SESSION['user_id'] ?? null;
     // select users details

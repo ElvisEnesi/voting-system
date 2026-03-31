@@ -2,6 +2,7 @@
     // include files
     require_once './configuration/database.php';
     include "./authorization/authorized_user.php";
+    include "./authorization/logged_user.php";
     // get id from url
     if (isset($_GET['id'])) {
         $id = filter_var($_GET['id'], FILTER_SANITIZE_NUMBER_INT);

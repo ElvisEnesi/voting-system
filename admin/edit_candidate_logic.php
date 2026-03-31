@@ -2,6 +2,7 @@
     // include files
     require_once './configuration/database.php';
     include "./authorization/authorized_user.php";
+    include "./authorization/logged_user.php";
     if (isset($_POST['submit'])) {
         // get id from url
         if (isset($_GET['id'])) {

@@ -2,7 +2,15 @@
     // include files
     require_once '../configuration/database.php';
     require_once '../encryption/encryption.php';
+    require_once '../security/ip.php';
     if (isset($_POST['submit'])) {
+        // login attempt
+        $log_flow = mysqli_prepare($connection, "INSERT INTO login_log (status, ip_address) VALUES(?, ?)");
+        // login status
+        $log_status = "attempt";
+        // bind param & execute
+        mysqli_stmt_bind_param($log_flow, "ss", $log_status, $user_ip);
+        mysqli_stmt_execute($log_flow);
         // declare variables
         $search_email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
         $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
@@ -30,6 +38,13 @@
                     if ($users['is_admin'] == 1) {
                         $_SESSION['user_is_admin'] = true;
                     }
+                    // login attempt
+                    $log_flow = mysqli_prepare($connection, "INSERT INTO login_log (status, ip_address) VALUES(?, ?)");
+                    // login status
+                    $log_status = "success";
+                    // bind param & execute
+                    mysqli_stmt_bind_param($log_flow, "ss", $log_status, $user_ip);
+                    mysqli_stmt_execute($log_flow);
                     // redirect to index page
                     // set index for admin or user
                     if (isset($_SESSION['user_is_admin'])) {
@@ -46,6 +61,13 @@
         }
         // redirect if there's any error
         if (isset($_SESSION['sign_user'])) {
+            // login attempt
+            $log_flow = mysqli_prepare($connection, "INSERT INTO login_log (status, ip_address) VALUES(?, ?)");
+            // login status
+            $log_status = "failure";
+            // bind param & execute
+            mysqli_stmt_bind_param($log_flow, "ss", $log_status, $user_ip);
+            mysqli_stmt_execute($log_flow);
             header("location: " . root_url . "authentication/signin.php");
             exit();
         }

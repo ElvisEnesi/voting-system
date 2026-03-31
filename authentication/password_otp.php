@@ -1,5 +1,6 @@
 <?php
     include('../configuration/database.php');
+    include "./authorization/logged_user.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
