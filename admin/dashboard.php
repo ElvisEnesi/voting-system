@@ -121,14 +121,14 @@
                 <h3>My votes</h3>
                 <?php
                     // decrypt user nin
-                    $user_nin = decrypt_data($user_result['nin']);
+                    // $user_nin = decrypt_data($user_result['nin']);
                     // select users vote
-                    $personal_vote = mysqli_prepare($connection, "SELECT * FROM votes WHERE nin = ?");
-                    mysqli_stmt_bind_param($personal_vote, "i", $user_nin);
+                    $personal_vote = mysqli_prepare($connection, "SELECT * FROM votes WHERE user_id = ?");
+                    mysqli_stmt_bind_param($personal_vote, "i", $current_user);
                     mysqli_stmt_execute($personal_vote);
                     $personal_vote_result = mysqli_stmt_get_result($personal_vote);
                 ?>
-                <?php if (mysqli_num_rows($personal_vote_result) == 1) : ?>
+                <?php if (mysqli_num_rows($personal_vote_result) > 0) : ?>
                     <?php $personal_vote_result_details = mysqli_fetch_assoc($personal_vote_result); ?>
                         <table>
                             <tr>

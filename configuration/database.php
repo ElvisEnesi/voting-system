@@ -1,4 +1,9 @@
 <?php
+    require '../vendor/autoload.php';
+
+    use PHPMailer\PHPMailer\PHPMailer;
+
+    $mail = new PHPMailer();
     // start session
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
@@ -18,5 +23,7 @@
     } else {
         // echo "connection successful";
     }
+    // set default timezone
+    date_default_timezone_set('Africa/Lagos');
     
 

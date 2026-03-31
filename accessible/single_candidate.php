@@ -20,7 +20,7 @@
                     <h2><?= htmlspecialchars($candidate_result['title'], ENT_QUOTES, 'UTF-8') ?></h2>
                     <p><?= htmlspecialchars($candidate_result['party'], ENT_QUOTES, 'UTF-8') ?></p>
                 </div>
-                <form action="<?= root_url ?>authentication/otp.php" method="post">
+                <form action="<?= root_url ?>authentication/vote.php?id=<?= htmlspecialchars($candidate_result['id'], ENT_QUOTES, 'UTF-8') ?>" method="post">
                     <button type="submit" name="vote">Vote</button>
                 </form>
             </div>
