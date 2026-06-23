@@ -97,10 +97,15 @@
                 <div class="info">
                     <?php if (isset($_SESSION['user_is_admin'])) :  ?>
                         <div class="info_container">
+                            <?php 
+                                // select all threats
+                                $select_threats = mysqli_query($connection, "SELECT * FROM threats");
+                                $threat_count = mysqli_num_rows($select_threats);
+                            ?>
                             <div class="sticker"><ion-icon name="hardware-chip-outline"></ion-icon></div>
                             <div class="info_details">
-                                <div class="total">35</div>
-                                <div class="desc">New security threats</div>
+                                <div class="total"><?= htmlspecialchars($threat_count, ENT_QUOTES, 'UTF-8') ?></div>
+                                <div class="desc">Security threats</div>
                             </div>
                         </div>
                     <?php else : ?>
@@ -113,16 +118,26 @@
                         </div>
                     <?php endif; ?>
                     <div class="info_container">
+                        <?php 
+                            // select all votes
+                            $select_votes = mysqli_query($connection, "SELECT * FROM votes");
+                            $vote_count = mysqli_num_rows($select_votes);
+                        ?>
                         <div class="sticker"><ion-icon name="bookmarks-outline"></ion-icon></div>
                         <div class="info_details">
-                            <div class="total">550</div>
+                            <div class="total"><?= htmlspecialchars($vote_count, ENT_QUOTES, 'UTF-8') ?></div>
                             <div class="desc">Total votes</div>
                         </div>
                     </div>
                     <div class="info_container">
+                        <?php 
+                            // select all candidates
+                            $select_candidates = mysqli_query($connection, "SELECT * FROM candidate");
+                            $candidate_count = mysqli_num_rows($select_candidates);
+                        ?>
                         <div class="sticker"><ion-icon name="people-outline"></ion-icon></div>
                         <div class="info_details">
-                            <div class="total">45</div>
+                            <div class="total"><?= htmlspecialchars($candidate_count, ENT_QUOTES, 'UTF-8') ?></div>
                             <div class="desc">Candidates</div>
                         </div>
                     </div>
@@ -130,15 +145,24 @@
                 <h3>My votes</h3>
                 <table>
                     <tr>
-                        <th>Name</th>
                         <th>Party</th>
                         <th>Time created</th>
                     </tr>
-                    <tr>
-                        <td>Elvis Enesi Jatto</td>
-                        <td>APC</td>
-                        <td>3/24/2026</td>
-                    </tr>
+                    <?php
+                        // select votes of this user
+                        $logged_in_user_votes = mysqli_prepare($connection, "SELECT * FROM votes WHERE user_id = ?");
+                        mysqli_stmt_bind_param($logged_in_user_votes, "i", $_SESSION['user_id']);
+                        mysqli_stmt_execute($logged_in_user_votes);
+                        $logged_in_user_votes = mysqli_stmt_get_result($logged_in_user_votes);
+                        if (mysqli_num_rows($logged_in_user_votes) > 0) {
+                            while ($user_vote_result = mysqli_fetch_assoc($logged_in_user_votes)) {
+                                echo "<tr>";
+                                echo "<td>" . $user_vote_result['party'] . "</td>";
+                                echo "<td>" . $user_vote_result['date'] . "</td>";
+                                echo "</tr>";
+                            }
+                        }
+                    ?>
                 </table>
             </div>
             <?php if (isset($_SESSION['user_is_admin'])) : ?>

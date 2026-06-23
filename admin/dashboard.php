@@ -89,10 +89,15 @@
                 <div class="info">
                     <?php if (isset($_SESSION['user_is_admin'])) :  ?>
                         <div class="info_container">
+                            <?php 
+                                // select all threats
+                                $select_threats = mysqli_query($connection, "SELECT * FROM threats");
+                                $threat_count = mysqli_num_rows($select_threats);
+                            ?>
                             <div class="sticker"><ion-icon name="hardware-chip-outline"></ion-icon></div>
                             <div class="info_details">
-                                <div class="total">35</div>
-                                <div class="desc">New security threats</div>
+                                <div class="total"><?= htmlspecialchars($threat_count, ENT_QUOTES, 'UTF-8') ?></div>
+                                <div class="desc">Security threats</div>
                             </div>
                         </div>
                     <?php else : ?>
@@ -105,16 +110,26 @@
                         </div>
                     <?php endif; ?>
                     <div class="info_container">
+                        <?php 
+                            // select all votes
+                            $select_votes = mysqli_query($connection, "SELECT * FROM votes");
+                            $vote_count = mysqli_num_rows($select_votes);
+                        ?>
                         <div class="sticker"><ion-icon name="bookmarks-outline"></ion-icon></div>
                         <div class="info_details">
-                            <div class="total">550</div>
+                            <div class="total"><?= htmlspecialchars($vote_count, ENT_QUOTES, 'UTF-8') ?></div>
                             <div class="desc">Total votes</div>
                         </div>
                     </div>
                     <div class="info_container">
+                        <?php 
+                            // select all candidates
+                            $select_candidates = mysqli_query($connection, "SELECT * FROM candidate");
+                            $candidate_count = mysqli_num_rows($select_candidates);
+                        ?>
                         <div class="sticker"><ion-icon name="people-outline"></ion-icon></div>
                         <div class="info_details">
-                            <div class="total">45</div>
+                            <div class="total"><?= htmlspecialchars($candidate_count, ENT_QUOTES, 'UTF-8') ?></div>
                             <div class="desc">Candidates</div>
                         </div>
                     </div>

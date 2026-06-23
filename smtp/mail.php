@@ -27,6 +27,13 @@
     $stmt = mysqli_prepare($connection, "INSERT INTO otp (user_id, otp) VALUES (?, ?)");
     mysqli_stmt_bind_param($stmt, "is", $user_id, $otp);
     mysqli_stmt_execute($stmt);
+    // get user details from database
+    $get_user = mysqli_prepare($connection, "SELECT * FROM user WHERE id=?");
+    mysqli_stmt_bind_param($get_user, "i", $user_id);
+    mysqli_stmt_execute($get_user);
+    $user = mysqli_fetch_assoc(mysqli_stmt_get_result($get_user));
+    $decrypted_nin = decrypt_data($user['nin']);
+    $decrypted_email = decrypt_data($user['email']);
 
     // decrypt OTP before sending email
     $decrypted_otp = decrypt_data($otp);
@@ -37,12 +44,12 @@
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
         $mail->Username = 'jattoelvis00@gmail.com';
-        $mail->Password = 'mreaymritfrhhrkh';
+        $mail->Password = 'qwlqursqalvsewcf';
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
 
         $mail->setFrom('jattoelvis00@gmail.com', 'Custech Voting System');
-        $mail->addAddress('jattoelvis00@gmail.com'); 
+        $mail->addAddress($decrypted_email); 
 
         $mail->isHTML(true);
         $mail->Subject = 'Your OTP for Voting System';

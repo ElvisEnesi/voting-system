@@ -9,12 +9,12 @@
         session_start();
     }
     // define constant
-    define("root_url", "http://localhost/voting-system/");
+    define("root_url", "http://localhost:3000/");
     // declare database variables
-    $database_username = 'root';
+    $database_username = 'elvis';
     $server = 'localhost';
     $database_name = 'voting_system';
-    $database_password = '';
+    $database_password = 'ElvisSecure2026!';
     // make connection
     $connection = new mysqli($server, $database_username, $database_password, $database_name);
     // check connection

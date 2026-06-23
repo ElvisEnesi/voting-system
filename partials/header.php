@@ -19,7 +19,7 @@
 <body>
     <!--header-->
     <section class="header">
-        <div class="logo" onclick="window.location.href='<?php root_url ?>admin/index.php'">Custech Voting System</div>
+        <div class="logo" onclick="window.location.href='<?php root_url ?>index.php'">Custech Voting System</div>
         <!--for media query-->
         <div class="icon">
             <div class="openNav"><ion-icon name="menu-outline"></ion-icon></div>
@@ -42,7 +42,7 @@
                     <div class="drop_icon_open"><ion-icon name="chevron-down-outline"></ion-icon></div>
                 </button>
                 <div class="dropdown_links">
-                    <a href="http://localhost/voting-system/accessible/candidate.php">Candidates</a>
+                    <a href="http://localhost:3000/accessible/candidate.php">Candidates</a>
                 </div>
             </div>
             <?php if (!isset($_SESSION['user_id'])) : ?>
@@ -52,11 +52,11 @@
             <?php else : ?>
                 <?php if (isset($_SESSION['user_is_admin'])) : ?>
                     <div class="dropdown">
-                        <a href="http://localhost/voting-system/admin/dashboard.php"><img src="../images/users/<?= htmlspecialchars($user_result['avatar'], ENT_QUOTES,'UTF-8') ?>"></a>
+                        <a href="http://localhost:3000/admin/dashboard.php"><img src="../images/users/<?= htmlspecialchars($user_result['avatar'], ENT_QUOTES,'UTF-8') ?>"></a>
                     </div>
                 <?php else : ?>
                     <div class="dropdown">
-                        <a href="http://localhost/voting-system/user/dashboard.php"><img src="../images/users/<?= htmlspecialchars($user_result['avatar'], ENT_QUOTES,'UTF-8') ?>"></a>
+                        <a href="http://localhost:3000/user/dashboard.php"><img src="../images/users/<?= htmlspecialchars($user_result['avatar'], ENT_QUOTES,'UTF-8') ?>"></a>
                     </div>
                 <?php endif; ?>
             <?php endif; ?>

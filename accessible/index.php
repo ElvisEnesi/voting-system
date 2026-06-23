@@ -11,8 +11,10 @@
         </div>
     </section>
     <p class="desc">
-        Every great stay begins with a vision. For Tafari Hotel, that vision started years ago with a simple belief: that travel should never feel like a compromise. We saw a world of generic lobbies and impersonal service, and we decided to build something different—a sanctuary where the pulse of the city meets the tranquility of home.
-        What began as a single architectural dream has blossomed into a premier destination for travelers from across the globe. Our foundation is built on the art of thoughtful hospitality. We don’t just provide a room; we provide a curated environment where every texture, scent, and service is designed to elevate your day. From the hand-selected local art gracing our corridors to the precise ergonomics of our suites, we have obsessed over the details so that you don't have to.
+        Voting is a fundamental right and a crucial aspect of democratic societies. It allows citizens to express their 
+        opinions, influence government decisions, and shape the future of their communities. By participating in 
+        elections, individuals contribute to the democratic process, ensuring that their voices are heard and that 
+        leaders are held accountable for their actions.
     </p>
     <h1 id="candidates">Candidates</h1>
     <?php if (mysqli_num_rows($select_candidates) > 0) : ?>

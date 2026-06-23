@@ -45,7 +45,7 @@
                     <div class="drop_icon_open"><ion-icon name="chevron-down-outline"></ion-icon></div>
                 </button>
                 <div class="dropdown_links">
-                    <a href="http://localhost/voting-system/accessible/candidate.php">Candidates</a>
+                    <a href="http://localhost:3000/accessible/candidate.php">Candidates</a>
                 </div>
             </div>
             <?php if (!isset($_SESSION['user_id'])) : ?>

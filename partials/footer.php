@@ -2,8 +2,8 @@
     <section class="footer">
         <div class="column">
             <h3>About Us</h3>
-            <a href="about.php">Our Story</a>
-            <a href="about.php#contact">Contact Us</a>
+            <a href="<?php echo root_url; ?>accessible/about.php">Our Story</a>
+            <a href="<?php echo root_url; ?>accessible/about.php#contact">Contact Us</a>
         </div>
     </section>
     <div class="copywright">

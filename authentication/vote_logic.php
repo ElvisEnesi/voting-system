@@ -95,11 +95,11 @@
                     $mail->Host = 'smtp.gmail.com';
                     $mail->SMTPAuth = true;
                     $mail->Username = 'jattoelvis00@gmail.com';
-                    $mail->Password = 'mreaymritfrhhrkh';
+                    $mail->Password = 'qwlqursqalvsewcf';
                     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                     $mail->Port = 587;
 
-                    $mail->setFrom('janedoe@gmail.com', 'Custech Voting System');
+                    $mail->setFrom('jattoelvis00@gmail.com', 'Custech Voting System');
                     $mail->addAddress($decrypted_email); 
 
                     $mail->isHTML(true);
