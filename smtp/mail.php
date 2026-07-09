@@ -43,13 +43,13 @@
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
-        $mail->Username = 'jattoelvis00@gmail.com';
+        $mail->Username = '';
         $mail->Password = '';
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
 
-        $mail->setFrom('jattoelvis00@gmail.com', 'Custech Voting System');
-        $mail->addAddress($decrypted_email); 
+        $mail->setFrom('', 'Custech Voting System');
+        $mail->addAddress(); 
 
         $mail->isHTML(true);
         $mail->Subject = 'Your OTP for Voting System';
